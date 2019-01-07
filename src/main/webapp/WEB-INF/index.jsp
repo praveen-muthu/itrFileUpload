@@ -1,20 +1,3 @@
-<%--
-    Licensed to the Apache Software Foundation (ASF) under one or more
-    contributor license agreements.  See the NOTICE file distributed with
-    this work for additional information regarding copyright ownership.
-    The ASF licenses this file to You under the Apache License, Version 2.0
-    (the "License"); you may not use this file except in compliance with
-    the License.  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
---%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -25,11 +8,11 @@
 <html lang="${language}">
 <head>
   <meta charset="utf-8">
-  <title>Moviefun</title>
+  <title>Perficient ITReturns</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
-
+    <link rel="icon" type="image/png" href="../assets/img/favicon-32x32.png" sizes="32x32">
   <!-- Le styles -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -55,7 +38,7 @@
 							<h2> IT-Returns <img class="loadingImg"	id="fileUpload-loading" src="../assets/img/loading-circle.gif"></h2>
 							<div class="container">
 							    <div class="col-md-6">
-							        <form class="" method="post" enctype="multipart/form-data" action="/itreturns/itrfileupload">
+							        <form class="" method="post" enctype="multipart/form-data" action="/prftFinance/itrfileupload">
                                         <div class="form-group">
                                           <label for="fname"><strong>Firstname</strong></label>
                                           <input type="text" class="form-control" id="fname" placeholder="Enter Firstname" name="fname">
@@ -70,16 +53,29 @@
                                                  <input type="file" name="myfile" class="browseFile">
                                                 </span> <label class="fileName"></label>
                                             </div>
-                                            <p>*</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <c:if test="${not empty message}">
+                                                <div class="alert alert-info">
+                                                    <c:out value="${message}"/>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${not empty errorMsg}">
+                                                <div class="alert alert-danger">
+                                                    <c:out value="${errorMsg}"/>
+                                                </div>
+                                            </c:if>
+                                            <div class="alert alert-danger fileFormatErr" style="display:none">
+                                                Alert!!! Upload only .zip file.
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                            <button type="submit" disabled class="btn btn-primary pull-right" id="btnuploadFile">Submit</button>
                                         </div>
                                       </form>
-                                       <br/><br/>
 							    </div>
-
                             </div>
+                            <br/><br/>
 						</div>
 					</div>
 			</section>
@@ -93,11 +89,12 @@
 	<script>
 	$(document).on('change', '.browseFile', function() {
 	    var filename = $(this).val();
-    	$(".fileName").text($(this).val().replace(/C:\\fakepath\\/i, ''));
+	    $(".fileName").text($(this).val().replace(/C:\\fakepath\\/i, ''));
     	if(filename.split(".").pop() != "zip"){
-    	    alert('Upload only .zip file.');
+    	    $(".fileFormatErr").show();
     	    $("#btnuploadFile").attr('disabled','disabled');
     	}else{
+    	    $(".fileFormatErr").hide();
     	    $("#btnuploadFile").removeAttr('disabled');
     	}
     });

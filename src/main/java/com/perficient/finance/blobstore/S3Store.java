@@ -1,23 +1,13 @@
 package com.perficient.finance.blobstore;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.amazonaws.util.IOUtils;
-import org.apache.tika.Tika;
+import com.amazonaws.services.s3.model.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 public class S3Store implements BlobStore {
 
     private final AmazonS3 s3;
-
-    private final Tika tika = new Tika();
 
     private final String bucketName;
 
@@ -36,6 +26,14 @@ public class S3Store implements BlobStore {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(blob.contentType);
         objectMetadata.setContentLength(blob.inputStream.available());
+
+//        ListObjectsRequest lor = new ListObjectsRequest().withBucketName("2018-2019");
+//        System.out.println("lor == "+lor);
+//        ObjectListing objectListing = s3.listObjects(lor);
+//        System.out.println("lor111 == "+objectListing);
+//        for (S3ObjectSummary summary: objectListing.getObjectSummaries()) {
+//            System.out.println(summary.getKey().split("/")[0]);
+//        }
 
         s3.putObject(bucketName, blob.name+".zip", blob.inputStream, objectMetadata);
     }
