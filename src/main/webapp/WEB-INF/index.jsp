@@ -18,7 +18,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="../assets/css/main.min.css" rel="stylesheet">
-
+    <style>
+        .instructions .list-group-item {
+            background-color: whitesmoke !important;
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -73,6 +78,17 @@
                                            <button type="submit" disabled class="btn btn-primary pull-right" id="btnuploadFile">Submit</button>
                                         </div>
                                       </form>
+							    </div>
+							    <div class="col-md-6">
+                                    <div class="instructions well well-lg">
+                                        <h3>Instructions to Upload Proof</h3>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">1. Update the required details in excel sheets</li>
+                                            <li class="list-group-item">2. Scan all neccessary proof as pdf</li>
+                                            <li class="list-group-item">3. Archive all documents into a ZIP file</li>
+                                            <li class="list-group-item">4. File name should be Firstname Lastname.zip</li>
+                                        </ul>
+                                    </div>
 							    </div>
                             </div>
                             <br/><br/>

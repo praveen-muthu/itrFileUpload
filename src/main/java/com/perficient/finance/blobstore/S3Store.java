@@ -2,8 +2,11 @@ package com.perficient.finance.blobstore;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import com.perficient.finance.itr.Employee;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class S3Store implements BlobStore {
 
@@ -27,15 +30,20 @@ public class S3Store implements BlobStore {
         objectMetadata.setContentType(blob.contentType);
         objectMetadata.setContentLength(blob.inputStream.available());
 
-//        ListObjectsRequest lor = new ListObjectsRequest().withBucketName("2018-2019");
-//        System.out.println("lor == "+lor);
-//        ObjectListing objectListing = s3.listObjects(lor);
-//        System.out.println("lor111 == "+objectListing);
-//        for (S3ObjectSummary summary: objectListing.getObjectSummaries()) {
-//            System.out.println(summary.getKey().split("/")[0]);
-//        }
-
         s3.putObject(bucketName, blob.name+".zip", blob.inputStream, objectMetadata);
+    }
+
+    @Override
+    public List<Employee> get() throws IOException {
+        ListObjectsRequest lor = new ListObjectsRequest().withBucketName("2018-2019");
+        List<Employee> empList = new ArrayList<Employee>();
+        ObjectListing objectListing = s3.listObjects(lor);
+        for (S3ObjectSummary summary: objectListing.getObjectSummaries()) {
+            Employee emp = new Employee();
+            emp.setEmpName(summary.getKey().split("/")[0]);
+            empList.add(emp);
+        }
+        return empList;
     }
 
    /* @Override

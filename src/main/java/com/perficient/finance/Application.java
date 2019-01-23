@@ -16,6 +16,12 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
+    @Value("${finance.itrservices}")
+    private String itrservices;
+
+    @Value("${finance.endpoint}")
+    private String endpoint;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -27,13 +33,13 @@ public class Application extends SpringBootServletInitializer {
 
     @Bean
     ServiceCredentials serviceCredentials() {
-        String vcapServices = "{\"user-provided\": [{\"credentials\": {\"access_key_id\": \"I69OWSM525NG3ODWMN9F\", \"bucket\": \"2018-2019\", \"secret_access_key\": \"q+h15i5zPtO6ZN0+RT2i5qUYga8x7rv07u+fwFO+\", \"endpoint\": \"http://10.113.34.53:9000\"}, \"name\": \"photo-storage\"}]}";
-        return new ServiceCredentials(vcapServices);
+//        String vcapServices = "{\"user-provided\": [{\"credentials\": {\"access_key_id\": \"I69OWSM525NG3ODWMN9F\", \"bucket\": \"2018-2019\", \"secret_access_key\": \"q+h15i5zPtO6ZN0+RT2i5qUYga8x7rv07u+fwFO+\", \"endpoint\": \"http://10.113.34.53:9000\"}, \"name\": \"photo-storage\"}]}";
+        return new ServiceCredentials(itrservices);
     }
 
     @Bean
     public BlobStore blobStore(
-        ServiceCredentials serviceCredentials) {
+            ServiceCredentials serviceCredentials) {
 
         String photoStorageAccessKeyId = serviceCredentials.getCredential("photo-storage", "user-provided", "access_key_id");
         String photoStorageSecretKey = serviceCredentials.getCredential("photo-storage", "user-provided", "secret_access_key");
@@ -41,7 +47,7 @@ public class Application extends SpringBootServletInitializer {
 
         AWSCredentials credentials = new BasicAWSCredentials(photoStorageAccessKeyId, photoStorageSecretKey);
         AmazonS3Client s3Client = new AmazonS3Client(credentials);
-        String endpoint = "http://10.113.34.53:9000";
+//        String endpoint = "http://10.113.34.53:9000";
         System.out.println(endpoint);
         if (endpoint != null) {
             s3Client.setEndpoint(endpoint);

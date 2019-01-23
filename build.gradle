@@ -38,6 +38,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile "commons-lang:commons-lang:2.4"
     compile "com.amazonaws:aws-java-sdk:1.11.74"
+    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.7.0"
     compile "javax.servlet:jstl:1.2"
 //    compile "org.apache.tomcat.embed:tomcat-embed-jasper:8.5.6"
 }
